@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_f306a776_2072_42ae_9b7f_02be0d219ded_Output_Payload = Number | Null
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="1f869b30-3775-4cff-851a-05c28ce957dc" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="choiceFlow" doc:id="0aa5e050-c597-432b-a88d-9bab0232051d" >
+		<http:listener doc:name="Listener" doc:id="e2fa6a42-5daa-421c-ac65-14a0fa389458" path="/choice" config-ref="HTTP_Listener_config"/>
+		<choice doc:name="Choice" doc:id="f0c2f113-1510-4622-9db7-b29c8aeba006" >
+			<when expression='#[attributes.queryParams.mark&gt;=90]'>
+				<set-payload doc:name="Set Payload" doc:id="6d311fd6-676f-44c7-8c94-546878ae7ae4" value='"grade"="A"'/>
+			</when>
+			<when expression="#[attributes.queryParams.mark&gt;=70]">
+				<set-payload value='"grade" ="B"' doc:name="Set Payload" doc:id="2e76edfa-68d3-4d3e-b966-8d53229e4e88" />
+			</when>
+			<when expression='#[attributes.queryParams.mark&gt;=60]'>
+				<set-payload value='"grade" ="C"' doc:name="Set Payload" doc:id="3815d1c5-890e-4d2a-a5d4-3a8b69377a4a" />
+			</when>
+			<when expression="attributes.queryParams.mark&gt;=50">
+				<set-payload value='"grade" ="D"' doc:name="Set Payload" doc:id="b5555cd2-a8cb-45b9-b46b-4752948749bc" />
+			</when>
+			<otherwise>
+				<set-payload value='"grade" =F' doc:name="Set Payload" doc:id="6a3af5a8-b8fa-405e-9742-b8b08856fece" />
+			</otherwise>
+		</choice>
+	</flow>
+	<flow name="choiceFlow1" doc:id="f306a776-2072-42ae-9b7f-02be0d219ded" >
+		<http:listener doc:name="Listener" doc:id="3736503a-2f81-41ee-933a-060ca3d36e3e" config-ref="HTTP_Listener_config" path="/size"/>
+		<set-variable value='#["hello"]' doc:name="Set Variable" doc:id="0a945d84-abe3-4fa6-9c65-6f32be3b67e6" variableName="nn"/>
+		<ee:transform doc:name="Transform Message" doc:id="57e35238-1c90-463b-8192-980ee501983e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var fname=attributes.queryParams.fname
+var lname=attributes.queryParams.lname
+---
+sizeOf(fname ++ lname)
+//vars.nn]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="choiceFlow2" doc:id="823933a2-04c0-4835-86ed-cc8850ebe307" >
+		<http:listener doc:name="Listener" doc:id="2dee2062-cb0d-4468-b72c-57f8dcf67581" config-ref="HTTP_Listener_config" path="/fun"/>
+		<ee:transform doc:name="Transform Message" doc:id="7cbfb561-fc75-4b26-ba5e-cb0a4aa5c2b5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+fun myfun()=attributes.queryParams.num1*attributes.queryParams.num1*attributes.queryParams.num1
+---
+myfun()]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

@@ -27,6 +27,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 				<set-payload value='"grade" =F' doc:name="Set Payload" doc:id="6a3af5a8-b8fa-405e-9742-b8b08856fece" />
 			</otherwise>
 		</choice>
+		<logger level="INFO" doc:name="Logger" doc:id="6ebca40f-1565-4e69-bf0d-9a939a60c53b" message="done"/>
 	</flow>
 	<flow name="choiceFlow1" doc:id="f306a776-2072-42ae-9b7f-02be0d219ded" >
 		<http:listener doc:name="Listener" doc:id="3736503a-2f81-41ee-933a-060ca3d36e3e" config-ref="HTTP_Listener_config" path="/size"/>

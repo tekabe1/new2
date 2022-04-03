@@ -43,6 +43,7 @@ sizeOf(fname ++ lname)
 //vars.nn]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="0fa20574-4a17-4961-8f50-8a47fa339414" message="done"/>
 	</flow>
 	<flow name="choiceFlow2" doc:id="823933a2-04c0-4835-86ed-cc8850ebe307" >
 		<http:listener doc:name="Listener" doc:id="2dee2062-cb0d-4468-b72c-57f8dcf67581" config-ref="HTTP_Listener_config" path="/fun"/>

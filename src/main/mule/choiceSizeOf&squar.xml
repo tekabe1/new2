@@ -56,6 +56,6 @@ fun myfun()=attributes.queryParams.num1*attributes.queryParams.num1*attributes.q
 myfun()]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="Logger" doc:id="667c03a7-ca06-49bf-83cd-da60c2901d3c" message="#[payload]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="667c03a7-ca06-49bf-83cd-da60c2901d3c" message='#["number squared"]'/>
 	</flow>
 </mule>
